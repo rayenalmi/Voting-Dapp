@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
+import "hardhat/console.sol";
+
 contract Voting {
     // Structure to represent a candidate
     struct Candidate {
@@ -9,7 +11,7 @@ contract Voting {
         uint voteCount;
     }
 
-    uint id=0;
+    uint id = 0;
     // all users in platform
     mapping(address => bool) private registered;
     mapping(address => string) private usernames;
@@ -26,9 +28,7 @@ contract Voting {
     Candidate[] public candidates;
 
     // Constructor to add candidates
-    constructor() {
-
-    }
+    constructor() {}
 
     function makeMeCondidate() public {
         require(!condidatesapplied[msg.sender], "User already a conndidate.");
@@ -38,7 +38,7 @@ contract Voting {
             Candidate({id: id, name: usernames[msg.sender], voteCount: 0})
         );
         id++;
-
+        console.log(" %s with address %s", usernames[msg.sender], msg.sender);
         emit UserCondidate(msg.sender, usernames[msg.sender]);
     }
 
@@ -46,6 +46,7 @@ contract Voting {
         require(!registered[msg.sender], "User already registered.");
         registered[msg.sender] = true;
         usernames[msg.sender] = username;
+        console.log("register %s as %s ", msg.sender, username);
         emit UserRegistered(msg.sender, username);
     }
 
@@ -57,6 +58,10 @@ contract Voting {
     function getUsername(address user) public view returns (string memory) {
         require(registered[user], "User not registered.");
         return usernames[user];
+    }
+
+    function getTest() public pure returns (string memory) {
+        return "Test Message";
     }
 
     // Function to vote for a candidate
@@ -73,6 +78,11 @@ contract Voting {
         // Record the voter's choice and mark them as having voted
         voters[msg.sender] = true;
 
+        console.log(
+            " %s vote to %s",
+            msg.sender,
+            candidates[_candidateId].name
+        );
         // Increment the candidate's vote count
         candidates[_candidateId].voteCount++;
     }
