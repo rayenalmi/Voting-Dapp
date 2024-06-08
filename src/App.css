@@ -1,3 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --light: #f6f6f9;
+    --primary: #1976D2;
+    --light-primary: #CFE8FF;
+    --grey: #eee;
+    --dark-grey: #AAAAAA;
+    --dark: #363949;
+    --danger: #D32F2F;
+	--light-danger: #FECDD3;
+    --warning: #FBC02D;
+    --light-warning: #FFF2C6;
+    --success: #388E3C;
+    --light-success: #BBF7D0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+.bx {
+    font-size: 1.7rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+html {
+    overflow-x: hidden;
+}
+
+body.dark {
+    --light: #181a1e;
+    --grey: #25252c;
+    --dark: #fbfbfb;
+}
+
+body {
+    background: var(--grey);
+    overflow-x: hidden;
+}
+
 .App {
   text-align: center;
 }
@@ -35,4 +86,77 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* table  users */
+.recent-orders {
+  margin-top: 1.3rem;
+}
+
+.recent-orders h2 {
+  margin-bottom: 0.8rem;
+}
+
+.recent-orders table {
+  background-color: var(--color-white);
+  width: 100%;
+  padding: var(--card-padding);
+  text-align: center;
+  box-shadow: var(--box-shadow);
+  border-radius: var(--card-border-radius);
+  transition: all 0.3s ease;
+}
+
+.recent-orders table:hover {
+  box-shadow: none;
+}
+
+table tbody td {
+  height: 2.8rem;
+  border-bottom: 1px solid var(--color-light);
+  color: var(--color-dark-variant);
+}
+
+table tbody tr:last-child td {
+  border: none;
+}
+
+.recent-orders a {
+  text-align: center;
+  display: block;
+  margin: 1rem auto;
+  color: var(--color-primary);
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 768px) {
+    .bx {
+        font-size: 1.2rem; /* Smaller icon size */
+    }
+
+    .App-header {
+        padding: 1rem; /* Reduce padding */
+    }
+
+    .App-logo {
+        height: 30vmin; /* Adjust logo size */
+    }
+
+    body, .recent-orders table {
+        font-size: calc(8px + 1.5vmin); /* Adjust base font size */
+    }
+
+    .recent-orders table {
+        padding: 1rem; /* Adjust padding */
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .bx {
+        font-size: 1rem; /* Even smaller icon size for very small devices */
+    }
+
+    .App-header, .recent-orders table {
+        font-size: calc(7px + 1.5vmin); /* Smaller text for very small devices */
+    }
 }
