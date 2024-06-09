@@ -6,13 +6,13 @@ export function ConsultVoting() {
 
     const [votes, setVotes] = useState({});
 
-    const listItems = votes
-        .map(vote =>
-            <tr key={vote.id}>
-                <td>{vote.Name}</td>
-                <td> 12 </td>
-            </tr>
-        );
+    // const listItems = votes
+    //     .map(vote =>
+    //         <tr key={vote.id}>
+    //             <td>{vote.Name}</td>
+    //             <td> 12 </td>
+    //         </tr>
+    //     );
 
 
     return (
@@ -36,7 +36,7 @@ export function ConsultVoting() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {listItems}
+                                        {/* {listItems} */}
                                     </tbody>
                                 </table>
                             </div>

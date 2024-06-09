@@ -30,7 +30,7 @@ contract Voting {
     // Constructor to add candidates
     constructor() {}
 
-    function makeMeCondidate() public {
+    function makeMeCondidate() public payable{
         require(!condidatesapplied[msg.sender], "User already a conndidate.");
         condidatesapplied[msg.sender] = true;
 
@@ -42,17 +42,18 @@ contract Voting {
         emit UserCondidate(msg.sender, usernames[msg.sender]);
     }
 
-    function register(string memory username) public {
-        require(!registered[msg.sender], "User already registered.");
+    function register(string memory username) public payable{
+        require(!registered[msg.sender], "User already registered. aaa");
         registered[msg.sender] = true;
         usernames[msg.sender] = username;
         console.log("register %s as %s ", msg.sender, username);
         emit UserRegistered(msg.sender, username);
     }
 
-    function login() public {
-        require(registered[msg.sender], "User not registered.");
+    function login() public returns (string memory) {
+        require(registered[msg.sender], "User not registered aaa.");
         emit UserLoggedIn(msg.sender);
+        return usernames[msg.sender];
     }
 
     function getUsername(address user) public view returns (string memory) {
@@ -60,12 +61,17 @@ contract Voting {
         return usernames[user];
     }
 
+    function getUsernameOfSender() public view returns (string memory) {
+        require(registered[msg.sender], "User not registered.");
+        return usernames[msg.sender];
+    }
+
     function getTest() public pure returns (string memory) {
         return "Test Message";
     }
 
     // Function to vote for a candidate
-    function vote(uint _candidateId) public {
+    function vote(uint _candidateId) public payable{
         // Ensure the voter has not voted before
         require(!voters[msg.sender], "You have already voted.");
 
@@ -92,6 +98,11 @@ contract Voting {
         return candidates.length;
     }
 
+    // Function to get all candidates
+    function getCandidates() public view returns (Candidate[] memory) {
+        return candidates;
+    }
+    
     // Function to get a candidate's details
     function getCandidate(
         uint _candidateId

@@ -12,13 +12,13 @@ export function Vote() {
         setIsOpen(!isOpen);
     }
 
-    const listItems = votes
-        .map((vote,index) =>
-            <tr key={index}>
-                <td>{vote.Name}</td>
-                <td>  <button onClick={() => { togglePopup(); }} type="button" class="btn btn-info">Vote</button> </td>
-            </tr>
-        );
+    // const listItems = votes
+    //     .map((vote,index) =>
+    //         <tr key={index}>
+    //             <td>{vote.Name}</td>
+    //             <td>  <button onClick={() => { togglePopup(); }} type="button" class="btn btn-info">Vote</button> </td>
+    //         </tr>
+    //     );
 
     return (
         <>
@@ -42,7 +42,7 @@ export function Vote() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {listItems}
+                                        {/* {listItems} */}
                                     </tbody>
                                 </table>
                             </div>
