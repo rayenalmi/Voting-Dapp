@@ -39,7 +39,7 @@ export function SignIn() {
     }, []);
 
 
-    const GoToVote = () => {
+    const   GoToVote = () => {
         history("/Vote");
     }
 
@@ -50,18 +50,21 @@ export function SignIn() {
             try {
                 //const data = await contract.methods.login().call();
                 const data = await contract.methods.login().send({ from: account });
-                console.log(data);
-                console.log(data.from);
-                const data1 = await contract.methods.login().call(data.from);
-                console.log(data1);
+                // console.log(data);
+                // console.log(data.from);
+                //const data1 = await contract.methods.getUsername().call(data.from);
+                // console.log(data1);
+
                 GoToVote();
 
             } catch (error) {
                 console.error(error);
                 console.error(error.message);
-
-                //alert(error.data.message)
             }
+
+
+
+            
         }
     }
 
@@ -70,7 +73,7 @@ export function SignIn() {
         history("/");
     }
 
-  
+
 
     return (
         <>
@@ -90,45 +93,45 @@ export function SignIn() {
                                 </div>
                                 <div className="col-6">
                                     <div className="container">
-                                         
-                                            <div className="row">
-                                                <div className="col-12 mb-3">
-                                                    <label
-                                                        htmlFor="address"
-                                                        className="form-label"
-                                                        style={{ textAlign: "left" }}
-                                                    >
-                                                        Address
-                                                    </label>
-                                                    <input
-                                                        readOnly
-                                                        type="text"
-                                                        className="form-control"
-                                                        id="address"
-                                                        name="address"
-                                                        placeholder="Address from MetaMask "
-                                                    />
-                                                </div>
-                                            </div>
-                                            {erroremessage !== "" ? (
-                                                <p className="text-danger">{erroremessage}</p>
-                                            ) : (
-                                                ""
-                                            )}
 
-                                            <br />
-                                            <div className="Search__actions">
-                                                <button className="btn btn-custom rounded-5" type="submit">
-                                                    <div className="logo">
-                                                        <div onClick={login} className="logo logo-name"><span>Sign </span>In</div>
-                                                    </div>
-                                                </button>
+                                        <div className="row">
+                                            <div className="col-12 mb-3">
+                                                <label
+                                                    htmlFor="address"
+                                                    className="form-label"
+                                                    style={{ textAlign: "left" }}
+                                                >
+                                                    Address
+                                                </label>
+                                                <input
+                                                    readOnly
+                                                    type="text"
+                                                    className="form-control"
+                                                    id="address"
+                                                    name="address"
+                                                    placeholder="Address from MetaMask "
+                                                />
                                             </div>
-                                            <br />
-                                            <p onClick={goToSignUp}   style={{ color: "#A68989" }}>
-                                                Register
-                                            </p>
-                                        
+                                        </div>
+                                        {erroremessage !== "" ? (
+                                            <p className="text-danger">{erroremessage}</p>
+                                        ) : (
+                                            ""
+                                        )}
+
+                                        <br />
+                                        <div className="Search__actions">
+                                            <button className="btn btn-custom rounded-5" type="submit">
+                                                <div className="logo">
+                                                    <div onClick={login} className="logo logo-name"><span>Sign </span>In</div>
+                                                </div>
+                                            </button>
+                                        </div>
+                                        <br />
+                                        <p onClick={goToSignUp} style={{ color: "#A68989" }}>
+                                            Register
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>

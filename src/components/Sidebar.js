@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { Link, useNavigate } from "react-router-dom";
-import React, {  } from "react";
+import React, { } from "react";
 import '../css/sidebar.css';
 import { useLocation } from "react-router-dom";
 
@@ -31,13 +31,7 @@ function Sidebar(props) {
             </div>
             <div className="col-1">
                 <div className="sidebar">
-                    <a href="/" className="logo">
-                        <i className='bx bx-code-alt'></i>
-                        <div className="logo-name"><span>Vote</span>Me</div>
-                    </a>
                     <ul className="side-menu">
-                        <li className={location.pathname === "/Vote" ? 'active' : ''}><a href="/Vote"><i className='bx bxs-dashboard'></i></a></li>
-
                         <Link to="/Vote">
                             <li className={location.pathname === "/Vote" ? 'active' : ''}>
                                 <a  ><i className='bx bx-analyse'></i>Vote</a>

@@ -71,7 +71,7 @@ export function SignUp() {
                 if (name) {
                     await contract.methods.register(name).send({ from: account });
                     console.log("Registered successfully");
-                    history("/SignUp")
+                    history("/SignIn")
                 }
 
             } catch (error) {

@@ -44,6 +44,7 @@ contract Voting {
 
     function register(string memory username) public payable{
         require(!registered[msg.sender], "User already registered. aaa");
+        require(bytes(username).length > 0 , "username should not be null");
         registered[msg.sender] = true;
         usernames[msg.sender] = username;
         console.log("register %s as %s ", msg.sender, username);
@@ -56,9 +57,9 @@ contract Voting {
         return usernames[msg.sender];
     }
 
-    function getUsername(address user) public view returns (string memory) {
-        require(registered[user], "User not registered.");
-        return usernames[user];
+    function getUsername() public view returns (string memory) {
+        require(registered[msg.sender], "User not registered.");
+        return usernames[msg.sender];
     }
 
     function getUsernameOfSender() public view returns (string memory) {

@@ -1,24 +1,64 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Web3 from "web3";
+import Voting from "../../artifacts/contracts/Voting.sol/Voting.json"
+
 import Sidebar from "../Sidebar";
 
 
 export function Vote() {
 
+    const votingAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+
+    const [web3, setWeb3] = useState(null);
+    const [contract, setContract] = useState(null);
+    const [account, setAccount] = useState(null);
+
+
     const [votes, setVotes] = useState({});
     const [isOpen, setIsOpen] = useState(false);
+
+    const history = useNavigate();
 
 
     const togglePopup = () => {
         setIsOpen(!isOpen);
     }
 
-    // const listItems = votes
-    //     .map((vote,index) =>
-    //         <tr key={index}>
-    //             <td>{vote.Name}</td>
-    //             <td>  <button onClick={() => { togglePopup(); }} type="button" class="btn btn-info">Vote</button> </td>
-    //         </tr>
-    //     );
+
+    useEffect(() => {
+        if (window.ethereum) {
+            const web3Instance = new Web3(window.ethereum);
+            setWeb3(web3Instance);
+
+            window.ethereum.request({ method: 'eth_requestAccounts' })
+                .then(accounts => {
+                    setAccount(accounts[0]);
+                });
+
+            const contractInstance = new web3Instance.eth.Contract(Voting.abi, votingAddress);
+            setContract(contractInstance);
+
+        } else {
+            console.log("MetaMask not detected");
+        }
+    }, []);
+
+
+    const GetName = () => {
+        try {
+            contract.methods.getTest().call({ gas: 50000 }).then(console.log);
+        } catch (error) {
+            console.log(error.message);
+        }
+
+        try {
+            console.log("data1");
+            contract.methods.getUsernameOfSender().call({ from: account, gas: 50000 }).then(console.log);
+        } catch (error) {
+            console.log(error.message);
+        }
+    }
 
     return (
         <>
@@ -49,6 +89,7 @@ export function Vote() {
                         </div>
                     </div>
                 </div>
+                <button onClick={GetName} > Call  </button>
             </div>
         </>
     );
