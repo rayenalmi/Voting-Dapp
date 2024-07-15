@@ -5,6 +5,9 @@ import "hardhat/console.sol";
 
 contract Voting {
     // Structure to represent a candidate
+    /*
+    change any uint to int when we just need a simple number
+    */
     struct Candidate {
         uint id;
         string name;

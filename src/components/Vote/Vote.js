@@ -44,6 +44,20 @@ export function Vote() {
         }
     }, []);
 
+    useEffect(() => {
+        const GetAllCondidates = () => {
+
+            contract.methods.getCandidates().call({ from: account, gas: 50000 }).then(function (result) {
+                console.log(result);
+                console.log(result[0]);
+
+            });
+        }
+        if (web3 != null) {
+            GetAllCondidates();
+        }
+    }, [account, contract.methods, web3])
+
 
     const GetName = () => {
         try {
@@ -53,8 +67,44 @@ export function Vote() {
         }
 
         try {
-            console.log("data1");
-            contract.methods.getUsernameOfSender().call({ from: account, gas: 50000 }).then(console.log);
+            //contract.methods.getUsernameOfSender().call({ from: account, gas: 50000 }).then(console.log);
+            contract.methods.getUsernameOfSender().call({ from: account, gas: 50000 }).then(function (result) {
+                console.log(result);
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+
+        /*
+        // using the callback
+        myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
+            ...
+        });
+        */
+    }
+
+
+    const GetNumberCondidates = () => {
+
+        // contract.methods.getCandidateCount().call({ gas: 50000 } , function(error, result){
+        //     console.log(result)
+        //  });
+
+        contract.methods.getCandidateCount().call({ from: account, gas: 50000 }).then(function (result) {
+            const x = Number(result);
+            console.log(x);
+        });
+    }
+
+
+    const makeMeCondidate = () => {
+        try {
+            contract.methods.makeMeCondidate().send({ from: account, gas: 500000 })
+                .then(function (receipt) {
+                    console.log(receipt);
+                    // receipt can also be a new contract instance, when coming from a "contract.deploy({...}).send()"
+                });
+
         } catch (error) {
             console.log(error.message);
         }
@@ -90,6 +140,10 @@ export function Vote() {
                     </div>
                 </div>
                 <button onClick={GetName} > Call  </button>
+                <button onClick={makeMeCondidate} > Make me makeMeCondidate  </button>
+                <button onClick={GetNumberCondidates} > get number GetNumberCondidates  </button>
+
+
             </div>
         </>
     );
