@@ -9,12 +9,12 @@ contract Voting {
     change any uint to int when we just need a simple number
     */
     struct Candidate {
-        uint id;
+        int id;
         string name;
-        uint voteCount;
+        int voteCount;
     }
 
-    uint id = 0;
+    int id = 0;
     // all users in platform
     mapping(address => bool) private registered;
     mapping(address => string) private usernames;
@@ -65,6 +65,10 @@ contract Voting {
         return usernames[msg.sender];
     }
 
+    function getUserVotedOrNot() public view returns (bool) {
+        return voters[msg.sender];
+    }
+
     function getUsernameOfSender() public view returns (string memory) {
         require(registered[msg.sender], "User not registered.");
         return usernames[msg.sender];
@@ -110,7 +114,7 @@ contract Voting {
     // Function to get a candidate's details
     function getCandidate(
         uint _candidateId
-    ) public view returns (string memory name, uint voteCount) {
+    ) public view returns (string memory name, int voteCount) {
         require(
             _candidateId >= 0 && _candidateId < candidates.length,
             "Invalid candidate ID."

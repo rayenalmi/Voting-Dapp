@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback } from "react";
 import Web3 from "web3";
 import Voting from "../../artifacts/contracts/Voting.sol/Voting.json"
 
@@ -15,15 +14,9 @@ export function Vote() {
     const [account, setAccount] = useState(null);
 
 
-    const [votes, setVotes] = useState({});
-    const [isOpen, setIsOpen] = useState(false);
-
-    const history = useNavigate();
+    const [condidates, setCondidates] = useState({});
 
 
-    const togglePopup = () => {
-        setIsOpen(!isOpen);
-    }
 
 
     useEffect(() => {
@@ -44,19 +37,20 @@ export function Vote() {
         }
     }, []);
 
+
+
     useEffect(() => {
         const GetAllCondidates = () => {
 
             contract.methods.getCandidates().call({ from: account, gas: 50000 }).then(function (result) {
                 console.log(result);
-                console.log(result[0]);
-
+                setCondidates(result);
             });
         }
         if (web3 != null) {
             GetAllCondidates();
         }
-    }, [account, contract.methods, web3])
+    }, [account, web3, contract])
 
 
     const GetName = () => {
@@ -74,22 +68,10 @@ export function Vote() {
         } catch (error) {
             console.log(error.message);
         }
-
-        /*
-        // using the callback
-        myContract.methods.myMethod(123).call({from: '0xde0B295669a9FD93d5F28D9Ec85E40f4cb697BAe'}, function(error, result){
-            ...
-        });
-        */
     }
 
 
     const GetNumberCondidates = () => {
-
-        // contract.methods.getCandidateCount().call({ gas: 50000 } , function(error, result){
-        //     console.log(result)
-        //  });
-
         contract.methods.getCandidateCount().call({ from: account, gas: 50000 }).then(function (result) {
             const x = Number(result);
             console.log(x);
@@ -109,6 +91,44 @@ export function Vote() {
             console.log(error.message);
         }
     }
+
+    const VoteMe = useCallback((id) => {
+        try {
+            let voted = false;
+            contract.methods.getUserVotedOrNot().call({ from: account, gas: 500000 })
+                .then(function (receipt) {
+                    console.log(receipt);
+                    voted = receipt;
+                });
+
+            if (!voted) {
+                contract.methods.makeMeCondidate().send({ from: account, gas: 500000 })
+                    .then(function (receipt) {
+                        console.log(receipt);
+                    });
+
+            }
+            else 
+            {
+                console.log("user already voted");
+            }
+
+
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, [account, contract]);
+
+
+    const listCondidates = condidates
+        .map(cond =>
+            <tr key={cond.id}>
+                <td>{cond.name}</td>
+                <td> {cond.voteCount} </td>
+                <td> <button onClick={() => VoteMe(cond.id)}> Vote me </button> </td>
+            </tr>
+        );
+
 
     return (
         <>
@@ -132,7 +152,7 @@ export function Vote() {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* {listItems} */}
+                                        {listCondidates}
                                     </tbody>
                                 </table>
                             </div>

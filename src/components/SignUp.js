@@ -38,38 +38,11 @@ export function SignUp() {
         }
     }, []);
 
-
-    async function requestAccounts() {
-        await window.ethereum.request({ method: 'eth_requestAccounts' });
-    }
-
-
-    async function login() {
-        if (contract && account) {
-            try {
-                //const data = await contract.methods.login().call();
-                const data = await contract.methods.login().send({ from: account });
-                console.log(data);
-                console.log(data.from);
-                const data1 = await contract.methods.login().call(data.from);
-                console.log(data1);
-
-            } catch (error) {
-                console.error(error);
-                console.error(error.message);
-
-                //alert(error.data.message)
-            }
-        }
-    }
-
-
-
     async function fetchRegister() {
         if (contract && account) {
             try {
                 if (name) {
-                    await contract.methods.register(name).send({ from: account });
+                    await contract.methods.register(name).send({ from: account ,gas: 50000 });
                     console.log("Registered successfully");
                     history("/SignIn")
                 }

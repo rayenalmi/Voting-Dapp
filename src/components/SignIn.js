@@ -39,7 +39,7 @@ export function SignIn() {
     }, []);
 
 
-    const   GoToVote = () => {
+    const GoToVote = () => {
         history("/Vote");
     }
 
@@ -49,7 +49,7 @@ export function SignIn() {
         if (contract && account) {
             try {
                 //const data = await contract.methods.login().call();
-                const data = await contract.methods.login().send({ from: account });
+                const data = await contract.methods.login().send({ from: account, gas: 50000 });
                 // console.log(data);
                 // console.log(data.from);
                 //const data1 = await contract.methods.getUsername().call(data.from);
@@ -64,7 +64,7 @@ export function SignIn() {
 
 
 
-            
+
         }
     }
 
